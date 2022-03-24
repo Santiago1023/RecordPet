@@ -6,7 +6,9 @@ package Vista;
 
 import Modelo.Cliente;
 import Modelo.ClienteDao;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,10 +19,35 @@ public class Sistema extends javax.swing.JFrame {
     // creamos las instancias de Cliente y ClienteDao
     Cliente cl = new Cliente();
     ClienteDao client = new ClienteDao();
+    DefaultTableModel modelo = new DefaultTableModel();
     public Sistema() {
         initComponents();
     }
-
+    
+    // el metodo ListarCliente se va ejecutar cada vez que le demos en el boton Cliente
+    public void ListarCliente(){
+        List<Cliente> ListarCl = client.ListarCliente();
+        modelo = (DefaultTableModel) TableCliente.getModel();
+        Object[] ob = new Object[6];
+        for(int i=0; i< ListarCl.size(); i++){
+            ob[0] = ListarCl.get(i).getId();
+            ob[1] = ListarCl.get(i).getDni();
+            ob[2] = ListarCl.get(i).getNombre();
+            ob[3] = ListarCl.get(i).getTelefono();
+            ob[4] = ListarCl.get(i).getDireccion();
+            ob[5] = ListarCl.get(i).getRazon();
+            modelo.addRow(ob);
+        }
+        TableCliente.setModel(modelo);
+    }
+    
+    // este metodo limpia la tabla, para que cada vez que le damos en el boton cliente, no se duplique lo que llevamos 
+    public void LimpiarTable(){
+        for (int i = 0; i< modelo.getRowCount(); i++){
+            modelo.removeRow(i);
+            i = i-1;
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,6 +176,11 @@ public class Sistema extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Clientes.png"))); // NOI18N
         jButton2.setText("Clientes");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/proveedor.png"))); // NOI18N
         jButton3.setText("Proveedor");
@@ -904,7 +936,7 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
-    // btn guardar cliente verifica que los campos no estén vacios
+    // btn guardar cliente verifica que los campos no estén vacios, si no estan vacios coge los valores de la GUI, crea el objeto java y lo registra en la tabla 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
         // TODO add your handling code here:
         if(!"".equals(txtDniCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText())  ){
@@ -919,6 +951,14 @@ public class Sistema extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Los campos estan vacios");
         }
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
+    
+    //este es el boton cliente, antes de listar el cliente, limpiamos la tabla
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        LimpiarTable();
+        ListarCliente();
+        jTabbedPane1.setSelectedIndex(1);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
