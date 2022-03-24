@@ -1,14 +1,14 @@
 
 package Modelo;
 
-
+// esta clase es la que crea instancias de la tabla usuarios 
 public class login {
     
     private int id;
     private String nombre;
     private String correo;
     private String pass;
-
+    
     public login() {
     }
 

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
  *
  * @author santi
  */
+// esto es NUEVO 
 public class Login extends javax.swing.JFrame {
     
     login lg = new login();
@@ -146,7 +147,8 @@ public class Login extends javax.swing.JFrame {
     private void txtCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCorreoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoActionPerformed
-
+    
+    // cuando oprima el boton que lance el metodo validar()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         validar();

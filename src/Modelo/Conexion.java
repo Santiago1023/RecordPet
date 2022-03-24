@@ -5,7 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-
+//clase que entrega la conexion con la base de datos
 public class Conexion {
     
     Connection con;
