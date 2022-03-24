@@ -71,6 +71,28 @@ public class ClienteDao {
         }
         return ListaCl;
     }
-        
+    
+    // consulta a la base de datos para eliminar
+    public boolean EliminarCliente(int id){
+        String sql = "DELETE FROM clientes WHERE id = ? ";
+        try{
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            return true;
+        } catch (SQLException e){
+            System.out.println(e.toString());
+            return false;
+        } finally{
+            try{
+                con.close();  
+            } catch (SQLException ex){
+                System.out.println(ex.toString());
+            }    
+        }
+                
+    }
+    
+    
 }
 
