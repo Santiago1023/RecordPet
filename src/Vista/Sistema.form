@@ -710,6 +710,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarClienteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnEliminarCliente">
               <Properties>
@@ -733,6 +736,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNuevoClienteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="txtIdCliente">
             </Component>

@@ -23,6 +23,7 @@ public class Sistema extends javax.swing.JFrame {
     public Sistema() {
         initComponents();
         this.setLocationRelativeTo(null);
+        txtIdCliente.setVisible(false);
     }
     
     // el metodo ListarCliente se va ejecutar cada vez que le demos en el boton Cliente
@@ -449,6 +450,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnEditarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
         btnEditarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarClienteActionPerformed(evt);
+            }
+        });
 
         btnEliminarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
         btnEliminarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -460,6 +466,11 @@ public class Sistema extends javax.swing.JFrame {
 
         btnNuevoCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevo.png"))); // NOI18N
         btnNuevoCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNuevoCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -1002,6 +1013,37 @@ public class Sistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEliminarClienteActionPerformed
+
+    private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
+        // TODO add your handling code here:
+        if("".equals(txtIdCliente.getText())){
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+            
+        }else{
+            
+            if(!"".equals(txtDniCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText())  || !"".equals(txtDireccionCliente.getText()) || !"".equals(txtRazonCliente.getText())     ){
+                cl.setDni(Integer.parseInt(txtDniCliente.getText()));
+                cl.setNombre(txtNombreCliente.getText());
+                cl.setTelefono(Integer.parseInt(txtTelefonoCliente.getText()));
+                cl.setDireccion(txtDireccionCliente.getText());
+                cl.setRazon(txtRazonCliente.getText());
+                cl.setId(Integer.parseInt(txtIdCliente.getText()));
+                client.ModificarCliente(cl);
+                LimpiarTable();
+                LimpiarCliente();
+                ListarCliente();
+            }else{
+                JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+            }
+            
+          
+        }
+    }//GEN-LAST:event_btnEditarClienteActionPerformed
+
+    private void btnNuevoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoClienteActionPerformed
+        // TODO add your handling code here:
+        LimpiarCliente();
+    }//GEN-LAST:event_btnNuevoClienteActionPerformed
 
     /**
      * @param args the command line arguments
