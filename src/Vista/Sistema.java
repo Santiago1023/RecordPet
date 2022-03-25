@@ -605,6 +605,11 @@ public class Sistema extends javax.swing.JFrame {
                 "ID", "RUC", "NOMBRE", "TELEFONO", "DIRECCION", "RAZON SOCIAL"
             }
         ));
+        TableProveedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TableProveedorMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(TableProveedor);
         if (TableProveedor.getColumnModel().getColumnCount() > 0) {
             TableProveedor.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -989,6 +994,20 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
         // TODO add your handling code here:
+        if(!"".equals(txtIdProveedor.getText())){
+            int pregunta = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar ?");
+            if(pregunta == 0){
+                int id = Integer.parseInt(txtIdProveedor.getText());
+                PrDao.EliminarProveedor(id);
+                LimpiarTable();
+                ListarProveedor();
+                LimpiarProveedor();
+            }
+            
+        } else{
+            JOptionPane.showMessageDialog(null, "Seleecione una fila");
+        }
+        
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     // btn guardar cliente verifica que los campos no estén vacios, si no estan vacios coge los valores de la GUI, crea el objeto java y lo registra en la tabla 
@@ -1086,6 +1105,10 @@ public class Sistema extends javax.swing.JFrame {
             pr.setDireccion(txtDireccionProveedor.getText());
             pr.setRazon(txtRazonProveedor.getText());
             PrDao.RegistrarProveedor(pr);
+            LimpiarTable();
+            ListarProveedor();
+            LimpiarProveedor();
+                    
         }else{
             JOptionPane.showMessageDialog(null, "Los campos estan vacios");
         }
@@ -1097,6 +1120,18 @@ public class Sistema extends javax.swing.JFrame {
         ListarProveedor();
         jTabbedPane1.setSelectedIndex(2);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void TableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProveedorMouseClicked
+        // TODO add your handling code here:
+        int fila = TableProveedor.rowAtPoint(evt.getPoint());
+        txtIdProveedor.setText(TableProveedor.getValueAt(fila,0).toString());
+        txtRucProveedor.setText(TableProveedor.getValueAt(fila,1).toString());
+        txtNombreProveedor.setText(TableProveedor.getValueAt(fila,2).toString());
+        txtTelefonoProveedor.setText(TableProveedor.getValueAt(fila,3).toString());
+        txtDireccionProveedor.setText(TableProveedor.getValueAt(fila,4).toString());
+        txtRazonProveedor.setText(TableProveedor.getValueAt(fila,5).toString());
+        
+    }//GEN-LAST:event_TableProveedorMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1252,5 +1287,13 @@ public class Sistema extends javax.swing.JFrame {
         txtTelefonoCliente.setText("");
         txtDireccionCliente.setText("");
         txtRazonCliente.setText("");
+    }
+    private void LimpiarProveedor(){
+        txtIdProveedor.setText("");
+        txtRucProveedor.setText("");
+        txtNombreProveedor.setText("");
+        txtTelefonoProveedor.setText("");
+        txtDireccionProveedor.setText("");
+        txtRazonProveedor.setText("");
     }
 }

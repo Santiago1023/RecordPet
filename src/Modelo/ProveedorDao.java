@@ -61,4 +61,27 @@ public class ProveedorDao {
         }
         return Listapr;
     }
+    
+    public boolean EliminarProveedor(int id){
+        String sql = "DELETE FROM proveedor WHERE id= ? ";
+        try{
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.execute();
+            return true;
+            
+        }catch(SQLException e){
+            System.out.println(e.toString());
+            return false;
+        }finally{
+            try{
+                con.close();
+                
+            }catch(SQLException e){
+                System.out.println(e.toString());
+                
+            }
+        }
+    }
 }
