@@ -5,11 +5,11 @@
         <group>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/login.java</file>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Vista/Sistema.java</file>
+            <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/Proveedor.java</file>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/LoginDAO.java</file>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/Conexion.java</file>
-            <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/Cliente.java</file>
+            <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/ProveedorDao.java</file>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Vista/Login.java</file>
-            <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/ClienteDao.java</file>
         </group>
     </open-files>
 </project-private>
