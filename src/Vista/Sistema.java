@@ -13,6 +13,7 @@ import Modelo.ProveedorDao;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 /**
  *
@@ -34,6 +35,8 @@ public class Sistema extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         txtIdCliente.setVisible(false);
+        AutoCompleteDecorator.decorate(cbxProveedorPro);
+        prodao.ConsultarProveedor(cbxProveedorPro);
     }
     
     // el metodo ListarCliente se va ejecutar cada vez que le demos en el boton Cliente
@@ -1006,6 +1009,9 @@ public class Sistema extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        LimpiarTable();
+        jTabbedPane1.setSelectedIndex(3);
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void txtPrecioVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioVentaActionPerformed
@@ -1040,6 +1046,7 @@ public class Sistema extends javax.swing.JFrame {
             cl.setDireccion(txtDireccionCliente.getText());
             cl.setRazon(txtRazonCliente.getText());
             client.RegistrarCliente(cl);
+            JOptionPane.showMessageDialog(null, "Cliente Registrado");
             LimpiarTable();
             LimpiarCliente();
             ListarCliente();
@@ -1100,6 +1107,7 @@ public class Sistema extends javax.swing.JFrame {
                 cl.setRazon(txtRazonCliente.getText());
                 cl.setId(Integer.parseInt(txtIdCliente.getText()));
                 client.ModificarCliente(cl);
+                JOptionPane.showMessageDialog(null, "Cliente Modificado");
                 LimpiarTable();
                 LimpiarCliente();
                 ListarCliente();
@@ -1125,6 +1133,7 @@ public class Sistema extends javax.swing.JFrame {
             pr.setDireccion(txtDireccionProveedor.getText());
             pr.setRazon(txtRazonProveedor.getText());
             PrDao.RegistrarProveedor(pr);
+            JOptionPane.showMessageDialog(null, "Proveedor Registrado");
             LimpiarTable();
             ListarProveedor();
             LimpiarProveedor();
@@ -1166,6 +1175,7 @@ public class Sistema extends javax.swing.JFrame {
                 pr.setRazon(txtRazonProveedor.getText());
                 pr.setId(Integer.parseInt(txtIdProveedor.getText()));
                 PrDao.ModificarProveedor(pr);
+                JOptionPane.showMessageDialog(null, "Proveedor Modificado");
                 LimpiarTable();
                 ListarProveedor();
                 LimpiarProveedor();
@@ -1188,6 +1198,7 @@ public class Sistema extends javax.swing.JFrame {
             pro.setStock(Integer.parseInt(txtCantPro.getText()));
             pro.setPrecio(Double.parseDouble(txtPrecioPro.getText()));
             prodao.RegistrarProductos(pro);
+            JOptionPane.showMessageDialog(null, "Productos Registrados");
             
         }
         else {
