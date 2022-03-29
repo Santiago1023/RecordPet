@@ -14,8 +14,21 @@ import Modelo.ProveedorDao;
 import Modelo.Venta;
 import Modelo.VentaDao;
 import Reportes.Excel;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -53,6 +66,7 @@ public class Sistema extends javax.swing.JFrame {
         
         AutoCompleteDecorator.decorate(cbxProveedorPro);
         prodao.ConsultarProveedor(cbxProveedorPro);
+        pdf();
     }
     
     // el metodo ListarCliente se va ejecutar cada vez que le demos en el boton Cliente
@@ -1721,4 +1735,76 @@ public class Sistema extends javax.swing.JFrame {
         txtDireccionCV.setText("");
         txtRazonCV.setText("");
     }
+    
+    private void pdf(){
+        try{
+            // le damos la ruta salida
+            FileOutputStream archivo;
+            // le indicamos la ruta
+            File file = new File("src/pdf/venta.pdf");
+            // utilizo mi archivo y le paso la ruta
+            archivo = new FileOutputStream(file);
+            // creamos nuestro documento
+            Document doc = new Document();
+            // creamos nuestro pdf, dentro de ello le pasamos el documento y el archivo
+            PdfWriter.getInstance(doc, archivo);
+            // abrimos nuestro documento
+            doc.open();
+            // insertamos nuestro logo (le especifico la ruta)
+            Image img = Image.getInstance("src/img/logo_pdf.png");
+            // creo un nuevo paragraph 
+            Paragraph fecha = new Paragraph();
+            // definimos el tipo de fuente que vamos a utilizar (se le especifica el tipo de familia, tamaño, negrita, color)
+            Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLUE);
+            // creamos una nueva linea 
+            fecha.add(Chunk.NEWLINE);
+            // fecha actual del sistema
+            Date date = new Date();
+            // agregamos la fecha con nuestro formato
+            fecha.add("Factura: 1\n"+ "Fecha: "+ new SimpleDateFormat("dd-mm-yyyy").format(date)+"\n\n");
+            // creamos nuestra tabla de 4 columnas
+            PdfPTable Encabezado = new PdfPTable(4);
+            // especificamos el tamaño, le decimos que ocupe todo el ancho
+            Encabezado.setWidthPercentage(100);
+            // quitamos el borde de la tabla
+            Encabezado.getDefaultCell().setBorder(0);
+            // creamos el tamaño para cada una de mis celdas
+            float[] ColumnaEncabezado = new float[]{20f, 30f, 70f, 40f};
+            // 
+            Encabezado.setWidths(ColumnaEncabezado);
+            // especificamos la posicion
+            Encabezado.setHorizontalAlignment(Element.ALIGN_LEFT);
+            // voy a comenzar agregar en cada una de sus celdas
+            Encabezado.addCell(img);
+            
+            String ruc = "15146";
+            String nom = "Record Pet";
+            String tel = "454545";
+            String dir = "Medallo";
+            String ra = "Record Pet";
+            
+            //agregamos una celda vacia para tener centrados los datos de mi empresa
+            Encabezado.addCell("");
+            //agrego datos de mi empresa
+            Encabezado.addCell("Ruc: "+ruc+ "\nNombre: "+nom+ "\nTelefono: "+tel+ "\nDireccion: "+dir+ "\nRazon: "+ra);
+            Encabezado.addCell(fecha);
+            //despues de agregar la fecha, vamos agregar todas las celdas al documento
+            doc.add(Encabezado);
+           
+            
+            
+            
+            // cerramos nuestro documento
+            doc.close();
+            // tambien cerramos nuestro archivo
+            archivo.close();
+            
+        }catch(Exception e){
+            
+        }
+    }
+    
+    
+    
+    
 }
