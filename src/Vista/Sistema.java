@@ -801,6 +801,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnEditarPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
+        btnEditarPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarProActionPerformed(evt);
+            }
+        });
 
         btnEliminarPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/eliminar.png"))); // NOI18N
         btnEliminarPro.addActionListener(new java.awt.event.ActionListener() {
@@ -1259,6 +1264,27 @@ public class Sistema extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnEliminarProActionPerformed
+
+    private void btnEditarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProActionPerformed
+        // TODO add your handling code here:
+        if("".equals(txtIdPro.getText())){
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }else{
+            if(!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText()) || !"".equals(txtCantPro.getText()) || !"".equals(txtPrecioPro.getText()) ){
+                pro.setCodigo(txtCodigoPro.getText());
+                pro.setNombre(txtDesPro.getText());
+                pro.setProveedor(cbxProveedorPro.getSelectedItem().toString());
+                pro.setStock(Integer.parseInt(txtCantPro.getText()));
+                pro.setPrecio(Double.parseDouble(txtPrecioPro.getText()));
+                pro.setId(Integer.parseInt(txtIdPro.getText()));
+                prodao.ModificarProductos(pro);
+                JOptionPane.showMessageDialog(null, "Producto Modificado");
+                LimpiarTable();
+                ListarProductos();
+                LimpiarProductos();
+            }
+        }
+    }//GEN-LAST:event_btnEditarProActionPerformed
 
     /**
      * @param args the command line arguments
