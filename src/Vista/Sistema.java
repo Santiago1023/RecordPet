@@ -21,6 +21,8 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.event.KeyEvent;
@@ -66,7 +68,7 @@ public class Sistema extends javax.swing.JFrame {
         
         AutoCompleteDecorator.decorate(cbxProveedorPro);
         prodao.ConsultarProveedor(cbxProveedorPro);
-        pdf();
+        
     }
     
     // el metodo ListarCliente se va ejecutar cada vez que le demos en el boton Cliente
@@ -1480,6 +1482,7 @@ public class Sistema extends javax.swing.JFrame {
         RegistrarVenta();
         RegistrarDetalle();
         ActualizarStock();
+        pdf();
         LimpiarTableVenta();
         LimpiarClienteventa();
         
@@ -1790,7 +1793,89 @@ public class Sistema extends javax.swing.JFrame {
             Encabezado.addCell(fecha);
             //despues de agregar la fecha, vamos agregar todas las celdas al documento
             doc.add(Encabezado);
-           
+            
+            // una vez agregados los encabezados, vamos agregar un nuevo paragraph
+            Paragraph cli = new Paragraph();
+            // agregamos una nueva linea
+            cli.add(Chunk.NEWLINE);
+            // agregamos el titulo
+            cli.add("Datos de los clientes"+"\n\n");
+            // se lo agrego al documento 
+            doc.add(cli);
+            
+            // creamos nueva tabla para los datos de mi cliente 
+            PdfPTable tablacli = new PdfPTable(4);
+            //quitamos borde de la tabla
+            // especificamos el tamaño, le decimos que ocupe todo el ancho
+            tablacli.setWidthPercentage(100);
+            // quitamos el borde de la tabla
+            tablacli.getDefaultCell().setBorder(0);
+            // creamos el tamaño para cada una de mis celdas
+            float[] ColumnaCli = new float[]{20f, 50f, 30f, 40f};
+            // 
+            tablacli.setWidths(ColumnaCli);
+            // especificamos la posicion
+            tablacli.setHorizontalAlignment(Element.ALIGN_LEFT);
+            // agregamos los titulos en celdas
+            PdfPCell cl1 = new PdfPCell(new Phrase("Dni/Ruc", negrita));
+            PdfPCell cl2 = new PdfPCell(new Phrase("Nombre", negrita));
+            PdfPCell cl3 = new PdfPCell(new Phrase("Telefono", negrita));
+            PdfPCell cl4 = new PdfPCell(new Phrase("Direccion", negrita));
+            // a cada una de las celdas, se les quita los bordes
+            cl1.setBorder(0);
+            cl2.setBorder(0);
+            cl3.setBorder(0);
+            cl4.setBorder(0);
+            // agregamos toda la celda a la tabla
+            tablacli.addCell(cl1);
+            tablacli.addCell(cl2);
+            tablacli.addCell(cl3);
+            tablacli.addCell(cl4);
+            // tambien le agregamos los valores
+            tablacli.addCell(txtRucVenta.getText());
+            tablacli.addCell(txtNombreVenta.getText());
+            tablacli.addCell(txtTelefonoCV.getText());
+            tablacli.addCell(txtDireccionCV.getText());
+            
+            doc.add(tablacli);
+            
+            // agregamos los productos 
+            PdfPTable tablapro = new PdfPTable(4);
+            tablapro.setWidthPercentage(100);
+            tablapro.getDefaultCell().setBorder(0);
+            float[] Columnapro = new float[]{10f, 50f, 15f, 20f};
+            tablapro.setWidths(Columnapro);
+            tablapro.setHorizontalAlignment(Element.ALIGN_LEFT);
+            // le agregamos color 
+            PdfPCell pro1 = new PdfPCell(new Phrase("Cant.", negrita));
+            PdfPCell pro2 = new PdfPCell(new Phrase("Descripcion", negrita));
+            PdfPCell pro3 = new PdfPCell(new Phrase("Precio U.", negrita));
+            PdfPCell pro4 = new PdfPCell(new Phrase("Precio T.", negrita));
+            
+            pro1.setBorder(0);
+            pro2.setBorder(0);
+            pro3.setBorder(0);
+            pro4.setBorder(0);
+            pro1.setBackgroundColor(BaseColor.DARK_GRAY);
+            pro2.setBackgroundColor(BaseColor.DARK_GRAY);
+            pro3.setBackgroundColor(BaseColor.DARK_GRAY);
+            pro4.setBackgroundColor(BaseColor.DARK_GRAY);
+            tablapro.addCell(pro1);
+            tablapro.addCell(pro2);
+            tablapro.addCell(pro3);
+            tablapro.addCell(pro4);
+            // recorremos toda la tabla de nuestra venta y para recorrer toda la fila
+            for(int i = 0; i < TableVenta.getRowCount(); i++){
+                String producto = TableVenta.getValueAt(i, 1).toString();
+                String cantidad = TableVenta.getValueAt(i, 2).toString();
+                String precio = TableVenta.getValueAt(i, 3).toString();
+                String total = TableVenta.getValueAt(i, 4).toString();
+                tablapro.addCell(cantidad);
+                tablapro.addCell(producto);
+                tablapro.addCell(precio);
+                tablapro.addCell(total);
+            }
+            doc.add(tablapro);
             
             
             
