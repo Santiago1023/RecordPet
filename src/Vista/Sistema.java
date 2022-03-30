@@ -8,6 +8,7 @@ import Modelo.Cliente;
 import Modelo.ClienteDao;
 import Modelo.Config;
 import Modelo.Detalle;
+import Modelo.Eventos;
 import Modelo.Productos;
 import Modelo.ProductosDao;
 import Modelo.Proveedor;
@@ -45,7 +46,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
  * @author santi
  */
 public class Sistema extends javax.swing.JFrame {
-    
+
     // creamos las instancias de Cliente y ClienteDao
     Cliente cl = new Cliente();
     ClienteDao client = new ClienteDao();
@@ -57,12 +58,13 @@ public class Sistema extends javax.swing.JFrame {
     VentaDao Vdao = new VentaDao();
     Detalle Dv = new Detalle();
     Config conf = new Config();
-    
+    Eventos event = new Eventos();
+
     DefaultTableModel modelo = new DefaultTableModel();
     DefaultTableModel tmp = new DefaultTableModel();
     int item;
     double Totalpagar = 0.00;
-    
+
     public Sistema() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -70,20 +72,20 @@ public class Sistema extends javax.swing.JFrame {
         txtIdVenta.setVisible(false);
         txtIdpro.setVisible(false);
         txtIdProveedor.setVisible(false);
-        
+
         AutoCompleteDecorator.decorate(cbxProveedorPro);
         prodao.ConsultarProveedor(cbxProveedorPro);
         txtIdConfig.setVisible(false);
         ListarConfig();
-        
+
     }
-    
+
     // el metodo ListarCliente se va ejecutar cada vez que le demos en el boton Cliente
-    public void ListarCliente(){
+    public void ListarCliente() {
         List<Cliente> ListarCl = client.ListarCliente();
         modelo = (DefaultTableModel) TableCliente.getModel();
         Object[] ob = new Object[6];
-        for(int i=0; i< ListarCl.size(); i++){
+        for (int i = 0; i < ListarCl.size(); i++) {
             ob[0] = ListarCl.get(i).getId();
             ob[1] = ListarCl.get(i).getDni();
             ob[2] = ListarCl.get(i).getNombre();
@@ -94,12 +96,12 @@ public class Sistema extends javax.swing.JFrame {
         }
         TableCliente.setModel(modelo);
     }
-    
-    public void ListarProveedor(){
+
+    public void ListarProveedor() {
         List<Proveedor> ListarPr = PrDao.ListarProveedor();
         modelo = (DefaultTableModel) TableProveedor.getModel();
         Object[] ob = new Object[6];
-        for(int i=0; i< ListarPr.size(); i++){
+        for (int i = 0; i < ListarPr.size(); i++) {
             ob[0] = ListarPr.get(i).getId();
             ob[1] = ListarPr.get(i).getRuc();
             ob[2] = ListarPr.get(i).getNombre();
@@ -110,12 +112,12 @@ public class Sistema extends javax.swing.JFrame {
         }
         TableProveedor.setModel(modelo);
     }
-    
-    public void ListarProductos(){
+
+    public void ListarProductos() {
         List<Productos> ListarPro = prodao.ListarProductos();
         modelo = (DefaultTableModel) TableProducto.getModel();
         Object[] ob = new Object[6];
-        for(int i=0; i< ListarPro.size(); i++){
+        for (int i = 0; i < ListarPro.size(); i++) {
             ob[0] = ListarPro.get(i).getId();
             ob[1] = ListarPro.get(i).getCodigo();
             ob[2] = ListarPro.get(i).getNombre();
@@ -126,26 +128,26 @@ public class Sistema extends javax.swing.JFrame {
         }
         TableProducto.setModel(modelo);
     }
-    
-    public void ListarConfig(){
-       conf = prodao.BuscarDatos();
-       txtIdConfig.setText(""+conf.getId());
-       txtRucConfig.setText(""+conf.getRuc());
-       txtNombreConfig.setText(""+conf.getNombre());
-       txtTelefonoConfig.setText(""+conf.getTelefono());
-       txtDireccionConfig.setText(""+conf.getDireccion());
-       txtRazonConfig.setText(""+conf.getRazon());
-       
+
+    public void ListarConfig() {
+        conf = prodao.BuscarDatos();
+        txtIdConfig.setText("" + conf.getId());
+        txtRucConfig.setText("" + conf.getRuc());
+        txtNombreConfig.setText("" + conf.getNombre());
+        txtTelefonoConfig.setText("" + conf.getTelefono());
+        txtDireccionConfig.setText("" + conf.getDireccion());
+        txtRazonConfig.setText("" + conf.getRazon());
+
     }
 
-    
     // este metodo limpia la tabla, para que cada vez que le damos en el boton cliente, no se duplique lo que llevamos 
-    public void LimpiarTable(){
-        for (int i = 0; i< modelo.getRowCount(); i++){
+    public void LimpiarTable() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
             modelo.removeRow(i);
-            i = i-1;
+            i = i - 1;
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -384,11 +386,23 @@ public class Sistema extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCodigoVentaKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoVentaKeyTyped(evt);
+            }
+        });
+
+        txtDescripcionVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDescripcionVentaKeyTyped(evt);
+            }
         });
 
         txtCantidadVenta.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtCantidadVentaKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadVentaKeyTyped(evt);
             }
         });
 
@@ -396,6 +410,17 @@ public class Sistema extends javax.swing.JFrame {
         txtPrecioVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPrecioVentaActionPerformed(evt);
+            }
+        });
+        txtPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioVentaKeyTyped(evt);
+            }
+        });
+
+        txtStockDisponible.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtStockDisponibleKeyTyped(evt);
             }
         });
 
@@ -426,9 +451,17 @@ public class Sistema extends javax.swing.JFrame {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtRucVentaKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRucVentaKeyTyped(evt);
+            }
         });
 
         txtNombreVenta.setEditable(false);
+        txtNombreVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreVentaKeyTyped(evt);
+            }
+        });
 
         btnGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/print.png"))); // NOI18N
         btnGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -562,6 +595,36 @@ public class Sistema extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setText("Razon social:");
+
+        txtDniCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDniClienteKeyTyped(evt);
+            }
+        });
+
+        txtNombreCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreClienteKeyTyped(evt);
+            }
+        });
+
+        txtTelefonoCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoClienteKeyTyped(evt);
+            }
+        });
+
+        txtDireccionCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionClienteKeyTyped(evt);
+            }
+        });
+
+        txtRazonCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRazonClienteKeyTyped(evt);
+            }
+        });
 
         TableCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -717,6 +780,36 @@ public class Sistema extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel21.setText("RAZON SOCIAL:");
 
+        txtRucProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRucProveedorKeyTyped(evt);
+            }
+        });
+
+        txtNombreProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreProveedorKeyTyped(evt);
+            }
+        });
+
+        txtTelefonoProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoProveedorKeyTyped(evt);
+            }
+        });
+
+        txtDireccionProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionProveedorKeyTyped(evt);
+            }
+        });
+
+        txtRazonProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRazonProveedorKeyTyped(evt);
+            }
+        });
+
         TableProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -864,7 +957,36 @@ public class Sistema extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel26.setText("Proveedor:");
 
+        txtCodigoPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoProKeyTyped(evt);
+            }
+        });
+
+        txtDesPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDesProKeyTyped(evt);
+            }
+        });
+
+        txtCantPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantProKeyTyped(evt);
+            }
+        });
+
+        txtPrecioPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrecioProKeyTyped(evt);
+            }
+        });
+
         cbxProveedorPro.setEditable(true);
+        cbxProveedorPro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cbxProveedorProKeyTyped(evt);
+            }
+        });
 
         TableProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1057,8 +1179,43 @@ public class Sistema extends javax.swing.JFrame {
 
         jLabel31.setText("RAZON SOCIAL");
 
+        txtRucConfig.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRucConfigKeyTyped(evt);
+            }
+        });
+
+        txtNombreConfig.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreConfigKeyTyped(evt);
+            }
+        });
+
+        txtTelefonoConfig.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoConfigKeyTyped(evt);
+            }
+        });
+
+        txtDireccionConfig.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionConfigKeyTyped(evt);
+            }
+        });
+
+        txtRazonConfig.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRazonConfigKeyTyped(evt);
+            }
+        });
+
         btnActualizarConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Actualizar (2).png"))); // NOI18N
         btnActualizarConfig.setText("ACTUALIZAR");
+        btnActualizarConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarConfigActionPerformed(evt);
+            }
+        });
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel32.setText("DATOS DE LA EMPRESA");
@@ -1154,7 +1311,7 @@ public class Sistema extends javax.swing.JFrame {
         LimpiarTable();
         ListarProductos();
         jTabbedPane1.setSelectedIndex(3);
-        
+
     }//GEN-LAST:event_btnProductosActionPerformed
 
     private void txtPrecioVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioVentaActionPerformed
@@ -1163,26 +1320,26 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnEliminarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProveedorActionPerformed
         // TODO add your handling code here:
-        if(!"".equals(txtIdProveedor.getText())){
+        if (!"".equals(txtIdProveedor.getText())) {
             int pregunta = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar ?");
-            if(pregunta == 0){
+            if (pregunta == 0) {
                 int id = Integer.parseInt(txtIdProveedor.getText());
                 PrDao.EliminarProveedor(id);
                 LimpiarTable();
                 ListarProveedor();
                 LimpiarProveedor();
             }
-            
-        } else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Seleecione una fila");
         }
-        
+
     }//GEN-LAST:event_btnEliminarProveedorActionPerformed
 
     // btn guardar cliente verifica que los campos no estén vacios, si no estan vacios coge los valores de la GUI, crea el objeto java y lo registra en la tabla 
     private void btnGuardarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarClienteActionPerformed
         // TODO add your handling code here:
-        if(!"".equals(txtDniCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText())  ){
+        if (!"".equals(txtDniCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText())) {
             cl.setDni(Integer.parseInt(txtDniCliente.getText()));
             cl.setNombre(txtNombreCliente.getText());
             cl.setTelefono(Integer.parseInt(txtTelefonoCliente.getText()));
@@ -1194,11 +1351,11 @@ public class Sistema extends javax.swing.JFrame {
             LimpiarCliente();
             ListarCliente();
             JOptionPane.showMessageDialog(null, "Cliente Registrado");
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Los campos estan vacios");
         }
     }//GEN-LAST:event_btnGuardarClienteActionPerformed
-    
+
     //este es el boton cliente, antes de listar el cliente, limpiamos la tabla
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
@@ -1206,7 +1363,7 @@ public class Sistema extends javax.swing.JFrame {
         ListarCliente();
         jTabbedPane1.setSelectedIndex(1);
     }//GEN-LAST:event_btnClientesActionPerformed
-    
+
     // cuando le demos click a una fila en la tabla, que se muestren los datos en los campos de texto
     private void TableClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableClienteMouseClicked
         // TODO add your handling code here:
@@ -1217,32 +1374,32 @@ public class Sistema extends javax.swing.JFrame {
         txtTelefonoCliente.setText(TableCliente.getValueAt(fila, 3).toString());
         txtDireccionCliente.setText(TableCliente.getValueAt(fila, 4).toString());
         txtRazonCliente.setText(TableCliente.getValueAt(fila, 5).toString());
-        
+
     }//GEN-LAST:event_TableClienteMouseClicked
     // boton de eliminar
     private void btnEliminarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarClienteActionPerformed
         // TODO add your handling code here:
-        if(!"".equals(txtIdCliente.getText())){
+        if (!"".equals(txtIdCliente.getText())) {
             int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
-            if(pregunta == 0){
+            if (pregunta == 0) {
                 int id = Integer.parseInt(txtIdCliente.getText());
                 client.EliminarCliente(id);
                 LimpiarTable();
                 LimpiarCliente();
                 ListarCliente();
-                
+
             }
         }
     }//GEN-LAST:event_btnEliminarClienteActionPerformed
 
     private void btnEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarClienteActionPerformed
         // TODO add your handling code here:
-        if("".equals(txtIdCliente.getText())){
+        if ("".equals(txtIdCliente.getText())) {
             JOptionPane.showMessageDialog(null, "Seleccione una fila");
-            
-        }else{
-            
-            if(!"".equals(txtDniCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText())  || !"".equals(txtDireccionCliente.getText()) || !"".equals(txtRazonCliente.getText())     ){
+
+        } else {
+
+            if (!"".equals(txtDniCliente.getText()) || !"".equals(txtNombreCliente.getText()) || !"".equals(txtTelefonoCliente.getText()) || !"".equals(txtDireccionCliente.getText()) || !"".equals(txtRazonCliente.getText())) {
                 cl.setDni(Integer.parseInt(txtDniCliente.getText()));
                 cl.setNombre(txtNombreCliente.getText());
                 cl.setTelefono(Integer.parseInt(txtTelefonoCliente.getText()));
@@ -1254,11 +1411,10 @@ public class Sistema extends javax.swing.JFrame {
                 LimpiarTable();
                 LimpiarCliente();
                 ListarCliente();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Los campos estan vacios");
             }
-            
-          
+
         }
     }//GEN-LAST:event_btnEditarClienteActionPerformed
 
@@ -1269,7 +1425,7 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnGuardarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProveedorActionPerformed
         // TODO add your handling code here:
-        if(!"".equals(txtRucProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText()) || !"".equals(txtRazonProveedor.getText()) ){
+        if (!"".equals(txtRucProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText()) || !"".equals(txtRazonProveedor.getText())) {
             pr.setRuc(Integer.parseInt(txtRucProveedor.getText()));
             pr.setNombre(txtNombreProveedor.getText());
             pr.setTelefono(Integer.parseInt(txtTelefonoProveedor.getText()));
@@ -1280,8 +1436,8 @@ public class Sistema extends javax.swing.JFrame {
             LimpiarTable();
             ListarProveedor();
             LimpiarProveedor();
-                    
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Los campos estan vacios");
         }
     }//GEN-LAST:event_btnGuardarProveedorActionPerformed
@@ -1296,21 +1452,21 @@ public class Sistema extends javax.swing.JFrame {
     private void TableProveedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProveedorMouseClicked
         // TODO add your handling code here:
         int fila = TableProveedor.rowAtPoint(evt.getPoint());
-        txtIdProveedor.setText(TableProveedor.getValueAt(fila,0).toString());
-        txtRucProveedor.setText(TableProveedor.getValueAt(fila,1).toString());
-        txtNombreProveedor.setText(TableProveedor.getValueAt(fila,2).toString());
-        txtTelefonoProveedor.setText(TableProveedor.getValueAt(fila,3).toString());
-        txtDireccionProveedor.setText(TableProveedor.getValueAt(fila,4).toString());
-        txtRazonProveedor.setText(TableProveedor.getValueAt(fila,5).toString());
-        
+        txtIdProveedor.setText(TableProveedor.getValueAt(fila, 0).toString());
+        txtRucProveedor.setText(TableProveedor.getValueAt(fila, 1).toString());
+        txtNombreProveedor.setText(TableProveedor.getValueAt(fila, 2).toString());
+        txtTelefonoProveedor.setText(TableProveedor.getValueAt(fila, 3).toString());
+        txtDireccionProveedor.setText(TableProveedor.getValueAt(fila, 4).toString());
+        txtRazonProveedor.setText(TableProveedor.getValueAt(fila, 5).toString());
+
     }//GEN-LAST:event_TableProveedorMouseClicked
 
     private void btnEditarProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProveedorActionPerformed
         // TODO add your handling code here:
-        if("".equals(txtIdProveedor.getText())){
+        if ("".equals(txtIdProveedor.getText())) {
             JOptionPane.showMessageDialog(null, "Seleccione una fila");
-        }else{
-            if(!"".equals(txtRucProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText()) || !"".equals(txtRazonProveedor.getText()) ){
+        } else {
+            if (!"".equals(txtRucProveedor.getText()) || !"".equals(txtNombreProveedor.getText()) || !"".equals(txtTelefonoProveedor.getText()) || !"".equals(txtDireccionProveedor.getText()) || !"".equals(txtRazonProveedor.getText())) {
                 pr.setRuc(Integer.parseInt(txtRucProveedor.getText()));
                 pr.setNombre(txtNombreProveedor.getText());
                 pr.setTelefono(Integer.parseInt(txtTelefonoProveedor.getText()));
@@ -1333,8 +1489,8 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnGuardarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarProActionPerformed
         // TODO add your handling code here:
-        if (!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText()) || !"".equals(cbxProveedorPro.getSelectedItem()) || !"".equals(txtCantPro.getText()) || !"".equals(txtPrecioPro.getText()) ){
-            
+        if (!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText()) || !"".equals(cbxProveedorPro.getSelectedItem()) || !"".equals(txtCantPro.getText()) || !"".equals(txtPrecioPro.getText())) {
+
             pro.setCodigo(txtCodigoPro.getText());
             pro.setNombre(txtDesPro.getText());
             pro.setProveedor(cbxProveedorPro.getSelectedItem().toString());
@@ -1345,8 +1501,7 @@ public class Sistema extends javax.swing.JFrame {
             LimpiarTable();
             ListarProductos();
             LimpiarProductos();
-        }
-        else {
+        } else {
             JOptionPane.showMessageDialog(null, "Los campos están vacios");
         }
     }//GEN-LAST:event_btnGuardarProActionPerformed
@@ -1354,35 +1509,35 @@ public class Sistema extends javax.swing.JFrame {
     private void TableProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableProductoMouseClicked
         // TODO add your handling code here:
         int fila = TableProducto.rowAtPoint(evt.getPoint());
-        txtIdPro.setText(TableProducto.getValueAt(fila,0).toString());
-        txtCodigoPro.setText(TableProducto.getValueAt(fila,1).toString());
-        txtDesPro.setText(TableProducto.getValueAt(fila,2).toString());
-        cbxProveedorPro.setSelectedItem(TableProducto.getValueAt(fila,3).toString());
-        txtCantPro.setText(TableProducto.getValueAt(fila,4).toString());
-        txtPrecioPro.setText(TableProducto.getValueAt(fila,5).toString());
+        txtIdPro.setText(TableProducto.getValueAt(fila, 0).toString());
+        txtCodigoPro.setText(TableProducto.getValueAt(fila, 1).toString());
+        txtDesPro.setText(TableProducto.getValueAt(fila, 2).toString());
+        cbxProveedorPro.setSelectedItem(TableProducto.getValueAt(fila, 3).toString());
+        txtCantPro.setText(TableProducto.getValueAt(fila, 4).toString());
+        txtPrecioPro.setText(TableProducto.getValueAt(fila, 5).toString());
     }//GEN-LAST:event_TableProductoMouseClicked
 
     private void btnEliminarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProActionPerformed
         // TODO add your handling code here:
-        if(!"".equals(txtIdPro.getText())){
+        if (!"".equals(txtIdPro.getText())) {
             int pregunta = JOptionPane.showConfirmDialog(null, "Esta seguro de eliminar");
-            if(pregunta == 0){
+            if (pregunta == 0) {
                 int id = Integer.parseInt(txtIdPro.getText());
                 prodao.EliminarProductos(id);
                 LimpiarTable();
                 LimpiarProductos();
                 ListarProductos();
-                
+
             }
         }
     }//GEN-LAST:event_btnEliminarProActionPerformed
 
     private void btnEditarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarProActionPerformed
         // TODO add your handling code here:
-        if("".equals(txtIdPro.getText())){
+        if ("".equals(txtIdPro.getText())) {
             JOptionPane.showMessageDialog(null, "Seleccione una fila");
-        }else{
-            if(!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText()) || !"".equals(txtCantPro.getText()) || !"".equals(txtPrecioPro.getText()) ){
+        } else {
+            if (!"".equals(txtCodigoPro.getText()) || !"".equals(txtDesPro.getText()) || !"".equals(txtCantPro.getText()) || !"".equals(txtPrecioPro.getText())) {
                 pro.setCodigo(txtCodigoPro.getText());
                 pro.setNombre(txtDesPro.getText());
                 pro.setProveedor(cbxProveedorPro.getSelectedItem().toString());
@@ -1402,26 +1557,25 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
         Excel.reporte();
     }//GEN-LAST:event_btnExcelProActionPerformed
-    
+
     // cuando se esté en el text field codigo, verificar si se oprime enter, verificar si es diferente de vacio 
     private void txtCodigoVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoVentaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            if(!"".equals(txtCodigoVenta.getText())){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtCodigoVenta.getText())) {
                 String cod = txtCodigoVenta.getText();
                 pro = prodao.BuscarPro(cod);
-                if(pro.getNombre() != null){
-                    txtDescripcionVenta.setText(""+pro.getNombre());
-                    txtPrecioVenta.setText(""+pro.getPrecio());
-                    txtStockDisponible.setText(""+pro.getStock());
+                if (pro.getNombre() != null) {
+                    txtDescripcionVenta.setText("" + pro.getNombre());
+                    txtPrecioVenta.setText("" + pro.getPrecio());
+                    txtStockDisponible.setText("" + pro.getStock());
                     txtCantidadVenta.requestFocus();
-                }
-                else{
+                } else {
                     LimpiarVenta();
                     txtCodigoVenta.requestFocus();
                 }
-                
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(null, "Ingrese el codigo del producto");
                 txtCodigoVenta.requestFocus();
             }
@@ -1431,23 +1585,23 @@ public class Sistema extends javax.swing.JFrame {
     // cuando demos enter en el text field de cantidad
     private void txtCantidadVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadVentaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode()== KeyEvent.VK_ENTER){
-            if(!"".equals(txtCantidadVenta.getText())){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtCantidadVenta.getText())) {
                 String cod = txtCodigoVenta.getText();
                 String descripcion = txtDescripcionVenta.getText();
                 int cant = Integer.parseInt(txtCantidadVenta.getText());
                 double precio = Double.parseDouble(txtPrecioVenta.getText());
                 double total = cant * precio;
                 int stock = Integer.parseInt(txtStockDisponible.getText());
-                if(stock >= cant){
-                    item = item + 1 ;
+                if (stock >= cant) {
+                    item = item + 1;
                     tmp = (DefaultTableModel) TableVenta.getModel();
-                    for(int i=0; i< TableVenta.getRowCount(); i++){
-                        if(TableVenta.getValueAt(i, 1).equals(txtDescripcionVenta.getText())){
+                    for (int i = 0; i < TableVenta.getRowCount(); i++) {
+                        if (TableVenta.getValueAt(i, 1).equals(txtDescripcionVenta.getText())) {
                             JOptionPane.showMessageDialog(null, "El producto ya esta registrado");
                             return;
                         }
-                        
+
                     }
                     ArrayList lista = new ArrayList();
                     lista.add(item);
@@ -1467,13 +1621,12 @@ public class Sistema extends javax.swing.JFrame {
                     TotalPagar();
                     LimpiarVenta();
                     txtCodigoVenta.requestFocus();
-                    
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Stock no disponible");
                 }
-                else{
-                    JOptionPane.showMessageDialog(null,"Stock no disponible");
-                }
-            } else{
-                JOptionPane.showMessageDialog(null,"Ingrese Cantidad");
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese Cantidad");
             }
         }
     }//GEN-LAST:event_txtCantidadVentaKeyPressed
@@ -1488,39 +1641,202 @@ public class Sistema extends javax.swing.JFrame {
 
     private void txtRucVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucVentaKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
-            if(!"".equals(txtRucVenta.getText())){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!"".equals(txtRucVenta.getText())) {
                 int dni = Integer.parseInt(txtRucVenta.getText());
                 cl = client.BuscarClinete(dni);
-                if (cl.getNombre() != null){
-                    txtNombreVenta.setText(""+cl.getNombre());
-                    txtTelefonoCV.setText(""+cl.getTelefono());
-                    txtDireccionCV.setText(""+cl.getDireccion());
-                    txtRazonCV.setText(""+cl.getRazon());
-                }else{
+                if (cl.getNombre() != null) {
+                    txtNombreVenta.setText("" + cl.getNombre());
+                    txtTelefonoCV.setText("" + cl.getTelefono());
+                    txtDireccionCV.setText("" + cl.getDireccion());
+                    txtRazonCV.setText("" + cl.getRazon());
+                } else {
                     txtRucVenta.setText("");
-                    JOptionPane.showMessageDialog(null,"El cliente no existe");
+                    JOptionPane.showMessageDialog(null, "El cliente no existe");
                 }
-                
+
             }
         }
     }//GEN-LAST:event_txtRucVentaKeyPressed
 
     private void btnGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarVentaActionPerformed
         // TODO add your handling code here:
-        RegistrarVenta();
-        RegistrarDetalle();
-        ActualizarStock();
-        pdf();
-        LimpiarTableVenta();
-        LimpiarClienteventa();
-        
+        // antes de generar la venta si la tabla de productos es diferente de vacia
+        if (TableVenta.getRowCount() > 0) {
+            // y si tiene algun cliente asociado
+            if (!"".equals(txtNombreCliente.getText())) {
+                RegistrarVenta();
+                RegistrarDetalle();
+                ActualizarStock();
+                pdf();
+                LimpiarTableVenta();
+                LimpiarClienteventa();
+            }else{
+                JOptionPane.showMessageDialog(null, "Debes buscar un cliente");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay productos en las ventas");
+        }
+
+
     }//GEN-LAST:event_btnGenerarVentaActionPerformed
 
     private void btnNuevaVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaVentaActionPerformed
         // TODO add your handling code here:
         jTabbedPane1.setSelectedIndex(0);
     }//GEN-LAST:event_btnNuevaVentaActionPerformed
+
+    private void txtCodigoVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoVentaKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtCodigoVentaKeyTyped
+
+    private void txtDescripcionVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionVentaKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDescripcionVentaKeyTyped
+
+    private void txtCantidadVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadVentaKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtCantidadVentaKeyTyped
+
+    private void txtPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyTyped
+        // TODO add your handling code here:
+        event.numberDecimalKeyPress(evt, txtPrecioVenta);
+    }//GEN-LAST:event_txtPrecioVentaKeyTyped
+
+    private void txtStockDisponibleKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockDisponibleKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtStockDisponibleKeyTyped
+
+    private void txtRucVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucVentaKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtRucVentaKeyTyped
+
+    private void txtNombreVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreVentaKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtNombreVentaKeyTyped
+
+    private void txtPrecioProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioProKeyTyped
+        // TODO add your handling code here:
+        event.numberDecimalKeyPress(evt, txtPrecioPro);
+    }//GEN-LAST:event_txtPrecioProKeyTyped
+
+    private void txtDniClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDniClienteKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtDniClienteKeyTyped
+
+    private void txtNombreClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreClienteKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtNombreClienteKeyTyped
+
+    private void txtTelefonoClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoClienteKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtTelefonoClienteKeyTyped
+
+    private void txtDireccionClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionClienteKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDireccionClienteKeyTyped
+
+    private void txtRazonClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonClienteKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtRazonClienteKeyTyped
+
+    private void txtRucProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucProveedorKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtRucProveedorKeyTyped
+
+    private void txtNombreProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreProveedorKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtNombreProveedorKeyTyped
+
+    private void txtTelefonoProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoProveedorKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtTelefonoProveedorKeyTyped
+
+    private void txtDireccionProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionProveedorKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDireccionProveedorKeyTyped
+
+    private void txtRazonProveedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonProveedorKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtRazonProveedorKeyTyped
+
+    private void txtCodigoProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoProKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtCodigoProKeyTyped
+
+    private void txtDesProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDesProKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDesProKeyTyped
+
+    private void txtCantProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantProKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtCantProKeyTyped
+
+    private void cbxProveedorProKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbxProveedorProKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_cbxProveedorProKeyTyped
+
+    private void txtRucConfigKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucConfigKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtRucConfigKeyTyped
+
+    private void txtNombreConfigKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreConfigKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtNombreConfigKeyTyped
+
+    private void txtTelefonoConfigKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoConfigKeyTyped
+        // TODO add your handling code here:
+        event.numberKeyPress(evt);
+    }//GEN-LAST:event_txtTelefonoConfigKeyTyped
+
+    private void txtDireccionConfigKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionConfigKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtDireccionConfigKeyTyped
+
+    private void txtRazonConfigKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonConfigKeyTyped
+        // TODO add your handling code here:
+        event.textKeyPress(evt);
+    }//GEN-LAST:event_txtRazonConfigKeyTyped
+
+    private void btnActualizarConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarConfigActionPerformed
+        // TODO add your handling code here:
+        if (!"".equals(txtRucConfig.getText()) || !"".equals(txtNombreConfig.getText()) || !"".equals(txtTelefonoConfig.getText()) || !"".equals(txtDireccionConfig.getText()) || !"".equals(txtRazonConfig.getText())) {
+                conf.setRuc(Integer.parseInt(txtRucConfig.getText()));
+                conf.setNombre(txtNombreConfig.getText());
+                conf.setTelefono(Integer.parseInt(txtTelefonoConfig.getText()));
+                conf.setDireccion(txtDireccionConfig.getText());
+                conf.setRazon(txtRazonConfig.getText());
+                conf.setId(Integer.parseInt(txtIdConfig.getText()));
+                prodao.ModificarDatos(conf);
+                JOptionPane.showMessageDialog(null, "Datos de la empresa modificado");
+                ListarConfig();
+            } else {
+                JOptionPane.showMessageDialog(null, "Los campos estan vacios");
+            }
+    }//GEN-LAST:event_btnActualizarConfigActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1669,9 +1985,9 @@ public class Sistema extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefonoConfig;
     private javax.swing.JTextField txtTelefonoProveedor;
     // End of variables declaration//GEN-END:variables
-    
+
     // limpiamos los textfield
-    private void LimpiarCliente(){
+    private void LimpiarCliente() {
         txtIdCliente.setText("");
         txtDniCliente.setText("");
         txtNombreCliente.setText("");
@@ -1679,7 +1995,8 @@ public class Sistema extends javax.swing.JFrame {
         txtDireccionCliente.setText("");
         txtRazonCliente.setText("");
     }
-    private void LimpiarProveedor(){
+
+    private void LimpiarProveedor() {
         txtIdProveedor.setText("");
         txtRucProveedor.setText("");
         txtNombreProveedor.setText("");
@@ -1687,8 +2004,8 @@ public class Sistema extends javax.swing.JFrame {
         txtDireccionProveedor.setText("");
         txtRazonProveedor.setText("");
     }
-    
-    private void LimpiarProductos(){
+
+    private void LimpiarProductos() {
         txtIdPro.setText("");
         txtCodigoPro.setText("");
         cbxProveedorPro.setSelectedItem(null);
@@ -1696,19 +2013,19 @@ public class Sistema extends javax.swing.JFrame {
         txtCantPro.setText("");
         txtPrecioPro.setText("");
     }
-    
-    private void TotalPagar(){
+
+    private void TotalPagar() {
         Totalpagar = 0.00;
         int numFila = TableVenta.getRowCount();
-        for(int i = 0; i<numFila ; i++){
+        for (int i = 0; i < numFila; i++) {
             double cal = (double) TableVenta.getModel().getValueAt(i, 4);
             Totalpagar = Totalpagar + cal;
         }
         LabelTotal.setText(String.format("%.2f", Totalpagar));
-        
+
     }
-    
-    private void LimpiarVenta(){
+
+    private void LimpiarVenta() {
         txtCodigoVenta.setText("");
         txtDescripcionVenta.setText("");
         txtCantidadVenta.setText("");
@@ -1716,8 +2033,8 @@ public class Sistema extends javax.swing.JFrame {
         txtPrecioVenta.setText("");
         txtIdVenta.setText("");
     }
-    
-    private void RegistrarVenta(){
+
+    private void RegistrarVenta() {
         String cliente = txtNombreVenta.getText();
         String vendedor = LabelVendedor.getText();
         double monto = Totalpagar;
@@ -1726,12 +2043,12 @@ public class Sistema extends javax.swing.JFrame {
         v.setTotal(monto);
         Vdao.RegistrarVenta(v);
     }
-    
-    private void RegistrarDetalle(){
+
+    private void RegistrarDetalle() {
         int id = Vdao.IdVenta();
-        for(int i=0; i <  TableVenta.getRowCount() ;i++){
+        for (int i = 0; i < TableVenta.getRowCount(); i++) {
             String cod = TableVenta.getValueAt(i, 0).toString();
-            int cant = Integer.parseInt(TableVenta.getValueAt(i,2).toString());
+            int cant = Integer.parseInt(TableVenta.getValueAt(i, 2).toString());
             double precio = Double.parseDouble(TableVenta.getValueAt(i, 3).toString());
             Dv.setCod_pro(cod);
             Dv.setCantidad(cant);
@@ -1740,43 +2057,42 @@ public class Sistema extends javax.swing.JFrame {
             Vdao.RegistrarDetalle(Dv);
         }
     }
-    
-    private void ActualizarStock(){
-        for(int i = 0 ; i < TableVenta.getRowCount() ; i++){
+
+    private void ActualizarStock() {
+        for (int i = 0; i < TableVenta.getRowCount(); i++) {
             String cod = TableVenta.getValueAt(i, 0).toString();
             int cant = Integer.parseInt(TableVenta.getValueAt(i, 2).toString());
             pro = prodao.BuscarPro(cod);
             int StockActual = pro.getStock() - cant;
             Vdao.ActualizarStock(StockActual, cod);
-            
-        
+
         }
     }
-    
-    private void LimpiarTableVenta(){
+
+    private void LimpiarTableVenta() {
         tmp = (DefaultTableModel) TableVenta.getModel();
         int fila = TableVenta.getRowCount();
-        for(int i = 0 ; i < fila ; i++){
+        for (int i = 0; i < fila; i++) {
             tmp.removeRow(0);
         }
     }
-    
-    private void LimpiarClienteventa(){
+
+    private void LimpiarClienteventa() {
         txtRucVenta.setText("");
         txtNombreVenta.setText("");
         txtTelefonoCV.setText("");
         txtDireccionCV.setText("");
         txtRazonCV.setText("");
     }
-    
-    private void pdf(){
-        try{
+
+    private void pdf() {
+        try {
             // creamos la variable id 
             int id = Vdao.IdVenta();
             // le damos la ruta salida
             FileOutputStream archivo;
             // le indicamos la ruta
-            File file = new File("src/pdf/venta"+id+".pdf");
+            File file = new File("src/pdf/venta" + id + ".pdf");
             // utilizo mi archivo y le paso la ruta
             archivo = new FileOutputStream(file);
             // creamos nuestro documento
@@ -1796,7 +2112,7 @@ public class Sistema extends javax.swing.JFrame {
             // fecha actual del sistema
             Date date = new Date();
             // agregamos la fecha con nuestro formato
-            fecha.add("Factura: "+id+"\n"+ "Fecha: "+ new SimpleDateFormat("dd-mm-yyyy").format(date)+"\n\n");
+            fecha.add("Factura: " + id + "\n" + "Fecha: " + new SimpleDateFormat("dd-mm-yyyy").format(date) + "\n\n");
             // creamos nuestra tabla de 4 columnas
             PdfPTable Encabezado = new PdfPTable(4);
             // especificamos el tamaño, le decimos que ocupe todo el ancho
@@ -1811,30 +2127,30 @@ public class Sistema extends javax.swing.JFrame {
             Encabezado.setHorizontalAlignment(Element.ALIGN_LEFT);
             // voy a comenzar agregar en cada una de sus celdas
             Encabezado.addCell(img);
-            
+
             String ruc = txtRucConfig.getText();
             String nom = txtNombreConfig.getText();
             String tel = txtTelefonoConfig.getText();
             String dir = txtDireccionConfig.getText();
             String ra = txtRazonConfig.getText();
-            
+
             //agregamos una celda vacia para tener centrados los datos de mi empresa
             Encabezado.addCell("");
             //agrego datos de mi empresa
-            Encabezado.addCell("Ruc: "+ruc+ "\nNombre: "+nom+ "\nTelefono: "+tel+ "\nDireccion: "+dir+ "\nRazon: "+ra);
+            Encabezado.addCell("Ruc: " + ruc + "\nNombre: " + nom + "\nTelefono: " + tel + "\nDireccion: " + dir + "\nRazon: " + ra);
             Encabezado.addCell(fecha);
             //despues de agregar la fecha, vamos agregar todas las celdas al documento
             doc.add(Encabezado);
-            
+
             // una vez agregados los encabezados, vamos agregar un nuevo paragraph
             Paragraph cli = new Paragraph();
             // agregamos una nueva linea
             cli.add(Chunk.NEWLINE);
             // agregamos el titulo
-            cli.add("Datos de los clientes"+"\n\n");
+            cli.add("Datos de los clientes" + "\n\n");
             // se lo agrego al documento 
             doc.add(cli);
-            
+
             // creamos nueva tabla para los datos de mi cliente 
             PdfPTable tablacli = new PdfPTable(4);
             //quitamos borde de la tabla
@@ -1868,9 +2184,9 @@ public class Sistema extends javax.swing.JFrame {
             tablacli.addCell(txtNombreVenta.getText());
             tablacli.addCell(txtTelefonoCV.getText());
             tablacli.addCell(txtDireccionCV.getText());
-            
+
             doc.add(tablacli);
-            
+
             // agregamos los productos 
             PdfPTable tablapro = new PdfPTable(4);
             tablapro.setWidthPercentage(100);
@@ -1883,13 +2199,13 @@ public class Sistema extends javax.swing.JFrame {
             PdfPCell pro2 = new PdfPCell(new Phrase("Descripcion", negrita));
             PdfPCell pro3 = new PdfPCell(new Phrase("Precio U.", negrita));
             PdfPCell pro4 = new PdfPCell(new Phrase("Precio T.", negrita));
-            
+
             pro1.setBorder(0);
             pro2.setBorder(0);
             pro3.setBorder(0);
             pro4.setBorder(0);
             pro1.setBackgroundColor(BaseColor.DARK_GRAY);
-            pro2    .setBackgroundColor(BaseColor.DARK_GRAY);
+            pro2.setBackgroundColor(BaseColor.DARK_GRAY);
             pro3.setBackgroundColor(BaseColor.DARK_GRAY);
             pro4.setBackgroundColor(BaseColor.DARK_GRAY);
             tablapro.addCell(pro1);
@@ -1897,7 +2213,7 @@ public class Sistema extends javax.swing.JFrame {
             tablapro.addCell(pro3);
             tablapro.addCell(pro4);
             // recorremos toda la tabla de nuestra venta y para recorrer toda la fila
-            for(int i = 0; i < TableVenta.getRowCount(); i++){
+            for (int i = 0; i < TableVenta.getRowCount(); i++) {
                 String producto = TableVenta.getValueAt(i, 1).toString();
                 String cantidad = TableVenta.getValueAt(i, 2).toString();
                 String precio = TableVenta.getValueAt(i, 3).toString();
@@ -1908,15 +2224,15 @@ public class Sistema extends javax.swing.JFrame {
                 tablapro.addCell(total);
             }
             doc.add(tablapro);
-            
+
             // una vez agregados los productos, creamos otro paragraph
             Paragraph info = new Paragraph();
             // lo agregamos en una nueva linea
             info.add(Chunk.NEWLINE);
-            info.add("Total a pagar" + Totalpagar);
+            info.add("Total a pagar: " + Totalpagar);
             info.setAlignment(Element.ALIGN_RIGHT);
             doc.add(info);
-            
+
             // creamos otro paragrahp para la firma 
             Paragraph firma = new Paragraph();
             // lo agregamos en una nueva linea
@@ -1925,26 +2241,23 @@ public class Sistema extends javax.swing.JFrame {
             firma.add("-----------------------");
             firma.setAlignment(Element.ALIGN_CENTER);
             doc.add(firma);
-            
+
             Paragraph mensaje = new Paragraph();
             // lo agregamos en una nueva linea
             mensaje.add(Chunk.NEWLINE);
             mensaje.add("Gracias por su compra");
             mensaje.setAlignment(Element.ALIGN_CENTER);
             doc.add(mensaje);
-            
+
             // cerramos nuestro documento
             doc.close();
             // tambien cerramos nuestro archivo
             archivo.close();
             // despues de cerrar el archivo, mandar a llamar Desktop para abrir automatico el pdf 
             Desktop.getDesktop().open(file);
-        }catch(DocumentException | IOException e){
+        } catch (DocumentException | IOException e) {
             System.out.println(e.toString());
         }
     }
-    
-    
-    
-    
+
 }
