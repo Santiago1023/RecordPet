@@ -89,7 +89,10 @@ public class Sistema extends javax.swing.JFrame {
 
         AutoCompleteDecorator.decorate(cbxProveedorPro);
         prodao.ConsultarProveedor(cbxProveedorPro);
+        // se modifica por true ya que era false
         txtIdConfig.setVisible(false);
+        // metemos esto nuevo 
+        ListarConfig();
         if(priv.getRol().equals("Asistente")){
            
             btnProductos.setEnabled(false);
@@ -1315,6 +1318,12 @@ public class Sistema extends javax.swing.JFrame {
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel32.setText("DATOS DE LA EMPRESA");
 
+        txtIdConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdConfigActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -1950,8 +1959,13 @@ public class Sistema extends javax.swing.JFrame {
     private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
         // TODO add your handling code here:
         // para mandarle la fecha que quiero hacer el reporte 
-        String fechaReporte = new SimpleDateFormat("dd/MM/yyyy").format(Midate.getDate());
-        Grafico.Graficar(fechaReporte);
+        if(Midate.getCalendar() != null){
+            String fechaReporte = new SimpleDateFormat("dd/MM/yyyy").format(Midate.getDate());
+            Grafico.Graficar(fechaReporte); 
+        }else{
+            JOptionPane.showMessageDialog(null, "Se solicita poner la fecha");
+        }
+        
     }//GEN-LAST:event_btnGraficarActionPerformed
 
     private void TableVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TableVentasMouseClicked
@@ -1977,6 +1991,10 @@ public class Sistema extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnPdfVentasActionPerformed
+
+    private void txtIdConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdConfigActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdConfigActionPerformed
 
     /**
      * @param args the command line arguments
