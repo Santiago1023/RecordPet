@@ -15,6 +15,7 @@ import Modelo.Proveedor;
 import Modelo.ProveedorDao;
 import Modelo.Venta;
 import Modelo.VentaDao;
+import Modelo.login;
 import Reportes.Excel;
 import Reportes.Grafico;
 import com.itextpdf.text.BaseColor;
@@ -73,6 +74,13 @@ public class Sistema extends javax.swing.JFrame {
 
     public Sistema() {
         initComponents();
+        
+
+    }
+    
+    public Sistema(login priv){
+         
+        initComponents();
         this.setLocationRelativeTo(null);
         txtIdCliente.setVisible(false);
         txtIdVenta.setVisible(false);
@@ -82,8 +90,15 @@ public class Sistema extends javax.swing.JFrame {
         AutoCompleteDecorator.decorate(cbxProveedorPro);
         prodao.ConsultarProveedor(cbxProveedorPro);
         txtIdConfig.setVisible(false);
-        ListarConfig();
-
+        if(priv.getRol().equals("Asistente")){
+           
+            btnProductos.setEnabled(false);
+            btnProveedor.setEnabled(false);   
+            LabelVendedor.setText(priv.getNombre()); 
+            
+        }else{
+            LabelVendedor.setText(priv.getNombre()); 
+        }
     }
 
     // el metodo ListarCliente se va ejecutar cada vez que le demos en el boton Cliente
@@ -369,7 +384,7 @@ public class Sistema extends javax.swing.JFrame {
                                     .addComponent(btnNuevaVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(57, 57, 57)
-                                .addComponent(LabelVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(LabelVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
