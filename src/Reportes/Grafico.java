@@ -21,6 +21,7 @@ public class Grafico {
             String sql = "SELECT total FROM ventas WHERE fecha = ?";
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
+            ps.setString(1, fecha);
             rs = ps.executeQuery();
             DefaultPieDataset dataset = new DefaultPieDataset();
             while(rs.next()){

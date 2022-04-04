@@ -1934,7 +1934,7 @@ public class Sistema extends javax.swing.JFrame {
 
     private void btnGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficarActionPerformed
         // TODO add your handling code here:
-        
+        // para mandarle la fecha que quiero hacer el reporte 
         String fechaReporte = new SimpleDateFormat("dd/MM/yyyy").format(Midate.getDate());
         Grafico.Graficar(fechaReporte);
     }//GEN-LAST:event_btnGraficarActionPerformed
