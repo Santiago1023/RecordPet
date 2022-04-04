@@ -2274,7 +2274,8 @@ public class Sistema extends javax.swing.JFrame {
             // fecha actual del sistema
             Date date = new Date();
             // agregamos la fecha con nuestro formato
-            fecha.add("Factura: " + id + "\n" + "Fecha: " + new SimpleDateFormat("dd-mm-yyyy").format(date) + "\n\n");
+            // cambiamos mm por MM y - por /
+            fecha.add("Factura: " + id + "\n" + "Fecha: " + new SimpleDateFormat("dd/MM/yyyy").format(date) + "\n\n");
             // creamos nuestra tabla de 4 columnas
             PdfPTable Encabezado = new PdfPTable(4);
             // especificamos el tamaño, le decimos que ocupe todo el ancho
