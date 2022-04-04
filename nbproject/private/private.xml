@@ -5,7 +5,10 @@
         <group>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Vista/Sistema.java</file>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/VentaDao.java</file>
+            <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/Eventos.java</file>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/Venta.java</file>
+            <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/ProductosDao.java</file>
+            <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Reportes/Grafico.java</file>
             <file>file:/C:/Users/santi/OneDrive/Documentos/NetBeansProjects/RecordPet/src/Modelo/ClienteDao.java</file>
         </group>
     </open-files>
