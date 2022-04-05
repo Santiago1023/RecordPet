@@ -14,14 +14,14 @@ import java.sql.ResultSet;
  *
  * @author santi
  */
-// esta clase es la que se conecta con la base de datos y registra clientes en la tabla 
+// esta clase es la que se conecta con la base de datos y registra, modifica, busca, elimina clientes en la tabla clientes
 public class ClienteDao {
     
     Conexion cn = new Conexion();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
-    
+    // prepara las variables para hacer las conexiones a la base de datos y registra un cliente  
     public boolean RegistrarCliente(Cliente cl){
         String sql = "INSERT INTO clientes (dni, nombre, telefono, direccion, razon) VALUES (?,?,?,?,?)";
         try {
@@ -47,7 +47,7 @@ public class ClienteDao {
             }
         }
     }
-    
+    // prepara las variables para hacer las conexiones a la base de datos y trae los datos de la tabla clientes y los muestra visualmente
     public List ListarCliente(){
         List<Cliente> ListaCl = new ArrayList();
         String sql = "SELECT * FROM clientes";
@@ -72,7 +72,7 @@ public class ClienteDao {
         return ListaCl;
     }
     
-    // consulta a la base de datos para eliminar
+    // consulta a la base de datos para eliminar el cliente que le especificamos
     public boolean EliminarCliente(int id){
         String sql = "DELETE FROM clientes WHERE id = ? ";
         try{
@@ -93,6 +93,7 @@ public class ClienteDao {
                 
     }
     
+    // prepara las variables para hacer las conexiones a la base de datos y modifica el cliente con el id especificado
     public boolean ModificarCliente(Cliente cl){
         String sql = "UPDATE clientes SET dni=?, nombre=?, telefono=?, direccion=?, razon=? WHERE id=?";
         try{
@@ -118,6 +119,7 @@ public class ClienteDao {
         }
     }
     
+    // este metodo lo que hace es cuando en la ventana de nueva venta ingresamos el dni de un cliente, va y lo busca y rellena sus datos
     public Cliente BuscarClinete(int dni){
         Cliente cl = new Cliente();
         String sql = "SELECT * FROM clientes WHERE dni = ?";

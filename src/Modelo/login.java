@@ -1,7 +1,7 @@
 
 package Modelo;
 
-// esta clase es la que crea instancias de la tabla usuarios 
+// esta clase es la que crea instancias de la tabla usuarios que pueden ser administradores o asistentes
 public class login {
     
     private int id;

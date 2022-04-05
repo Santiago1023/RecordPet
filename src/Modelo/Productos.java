@@ -1,7 +1,7 @@
 
 package Modelo;
 
-
+// clase que crea objetos de los registros de la tabla productos 
 public class Productos {
     
     private int id;

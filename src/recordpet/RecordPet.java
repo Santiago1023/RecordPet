@@ -4,6 +4,8 @@
  */
 package recordpet;
 
+import Vista.Login;
+
 /**
  *
  * @author santi
@@ -15,7 +17,8 @@ public class RecordPet {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        Login lg = new Login();
+        lg.setVisible(true);
     }
     
 }

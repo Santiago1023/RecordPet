@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 // esta clase yo creo que lo que hace es que hace la conexion con la base de datos, trae ese registro de la tabla y lo convierte a objeto java
+
+// esta clase trae o registra la informacion de la base de datos de los usuarios de la aplicacion 
 public class LoginDAO {
     
     Connection con; 

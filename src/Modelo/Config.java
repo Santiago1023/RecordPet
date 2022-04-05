@@ -1,7 +1,7 @@
 
 package Modelo;
 
-
+// config es la clase que tiene los datos de la empresa
 public class Config {
     private int id;
     private int ruc;

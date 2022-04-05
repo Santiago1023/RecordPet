@@ -10,6 +10,7 @@ import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 
+// esta clase permite generar un grafico de las ventas en una fecha especifica
 public class Grafico {
     
     public static void Graficar(String fecha){

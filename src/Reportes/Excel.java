@@ -33,7 +33,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
- 
+
+
+// esta clase permite realizar los reportes en excel de los productos que hay 
 public class Excel {
     public static void reporte() {
  

@@ -1,7 +1,7 @@
 
 package Modelo;
 
-
+// esta clase crea el detalle de las ventas 
 public class Detalle {
     
     private int id;
