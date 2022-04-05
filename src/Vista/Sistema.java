@@ -668,7 +668,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addGap(35, 35, 35))
         );
 
-        jTabbedPane1.addTab("tab1", jPanel2);
+        jTabbedPane1.addTab("Venta", jPanel2);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setText("DNI/RUT:");
@@ -852,7 +852,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab2", jPanel3);
+        jTabbedPane1.addTab("Clientes", jPanel3);
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel17.setText("RUT:");
@@ -1029,7 +1029,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(79, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab3", jPanel4);
+        jTabbedPane1.addTab("Proveedor", jPanel4);
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel22.setText("Codigo:");
@@ -1215,7 +1215,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(67, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab4", jPanel5);
+        jTabbedPane1.addTab("Productos", jPanel5);
 
         TableVentas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1271,7 +1271,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(117, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab5", jPanel6);
+        jTabbedPane1.addTab("Ventas", jPanel6);
 
         jLabel27.setText("RUT");
 
@@ -1409,7 +1409,7 @@ public class Sistema extends javax.swing.JFrame {
                 .addContainerGap(106, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("tab6", jPanel7);
+        jTabbedPane1.addTab("Empresa", jPanel7);
 
         getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 850, 440));
 
