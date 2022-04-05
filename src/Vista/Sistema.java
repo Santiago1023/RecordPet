@@ -84,7 +84,7 @@ public class Sistema extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         txtIdCliente.setVisible(false);
         txtIdVenta.setVisible(false);
-        txtIdpro.setVisible(false);
+        txtIdPro.setVisible(false);
         txtIdProveedor.setVisible(false);
 
         AutoCompleteDecorator.decorate(cbxProveedorPro);
@@ -311,9 +311,10 @@ public class Sistema extends javax.swing.JFrame {
         txtIdConfig = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Record Pet");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 255));
+        jPanel1.setBackground(new java.awt.Color(248, 231, 203));
 
         btnNuevaVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/Nventa.png"))); // NOI18N
         btnNuevaVenta.setText("Nueva Venta");
@@ -363,7 +364,7 @@ public class Sistema extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logo.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logoEncabezado_pdf.png"))); // NOI18N
 
         LabelVendedor.setText("RecordPet");
 
@@ -373,29 +374,29 @@ public class Sistema extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnConfig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnProductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnProveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnClientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnNuevaVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(57, 57, 57)
-                                .addComponent(LabelVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnConfig, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnVentas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnProductos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnProveedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClientes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNuevaVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(LabelVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel2)
+                .addGap(28, 28, 28)
                 .addComponent(LabelVendedor)
                 .addGap(2, 2, 2)
                 .addComponent(btnNuevaVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -414,7 +415,7 @@ public class Sistema extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 580));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/encabezado.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/NuevoEncabezado.png"))); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 860, 140));
 
         jLabel3.setText("Codigo");
@@ -494,7 +495,7 @@ public class Sistema extends javax.swing.JFrame {
         }
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel8.setText("DNI/RUC");
+        jLabel8.setText("DNI/RUT");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setText("NOMBRE");
@@ -670,7 +671,7 @@ public class Sistema extends javax.swing.JFrame {
         jTabbedPane1.addTab("tab1", jPanel2);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel12.setText("DNI/RUC:");
+        jLabel12.setText("DNI/RUT:");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setText("Nombre:");
@@ -854,7 +855,7 @@ public class Sistema extends javax.swing.JFrame {
         jTabbedPane1.addTab("tab2", jPanel3);
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel17.setText("RUC:");
+        jLabel17.setText("RUT:");
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel18.setText("NOMBRE:");
@@ -1121,6 +1122,11 @@ public class Sistema extends javax.swing.JFrame {
         });
 
         btnNuevoPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevo.png"))); // NOI18N
+        btnNuevoPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoProActionPerformed(evt);
+            }
+        });
 
         btnExcelPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/excel.png"))); // NOI18N
         btnExcelPro.addActionListener(new java.awt.event.ActionListener() {
@@ -1267,7 +1273,7 @@ public class Sistema extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab5", jPanel6);
 
-        jLabel27.setText("RUC");
+        jLabel27.setText("RUT");
 
         jLabel28.setText("NOMBRE");
 
@@ -1996,6 +2002,11 @@ public class Sistema extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdConfigActionPerformed
 
+    private void btnNuevoProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoProActionPerformed
+        // TODO add your handling code here:
+        LimpiarProductos();
+    }//GEN-LAST:event_btnNuevoProActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -2264,11 +2275,13 @@ public class Sistema extends javax.swing.JFrame {
             // abrimos nuestro documento
             doc.open();
             // insertamos nuestro logo (le especifico la ruta)
-            Image img = Image.getInstance("src/img/logo_pdf.png");
+            Image img = Image.getInstance("src/img/logoEncabezado_pdf.png");
             // creo un nuevo paragraph 
             Paragraph fecha = new Paragraph();
             // definimos el tipo de fuente que vamos a utilizar (se le especifica el tipo de familia, tamaño, negrita, color)
-            Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLUE);
+            Font negrita = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
+            Font negritaBlanca = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.WHITE);
+            
             // creamos una nueva linea 
             fecha.add(Chunk.NEWLINE);
             // fecha actual del sistema
@@ -2358,10 +2371,10 @@ public class Sistema extends javax.swing.JFrame {
             tablapro.setWidths(Columnapro);
             tablapro.setHorizontalAlignment(Element.ALIGN_LEFT);
             // le agregamos color 
-            PdfPCell pro1 = new PdfPCell(new Phrase("Cant.", negrita));
-            PdfPCell pro2 = new PdfPCell(new Phrase("Descripcion", negrita));
-            PdfPCell pro3 = new PdfPCell(new Phrase("Precio U.", negrita));
-            PdfPCell pro4 = new PdfPCell(new Phrase("Precio T.", negrita));
+            PdfPCell pro1 = new PdfPCell(new Phrase("Cant.", negritaBlanca));
+            PdfPCell pro2 = new PdfPCell(new Phrase("Descripcion", negritaBlanca));
+            PdfPCell pro3 = new PdfPCell(new Phrase("Precio U.", negritaBlanca));
+            PdfPCell pro4 = new PdfPCell(new Phrase("Precio T.", negritaBlanca));
 
             pro1.setBorder(0);
             pro2.setBorder(0);
